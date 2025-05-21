@@ -26,15 +26,18 @@ if (Test-Path "*.csv")
     $datesInFileCsv = Import-Csv "*.csv"
     foreach ($line in $datesInFileCsv)
     {
-        if ($line.tag -and $line.monat -and $line.jahr)
+        if ($line.day -and $line.month -and $line.year)
         {
-            $dateString = "$($line.tag).$($line.monat).$($line.jahr)"
+            $dateString = "$($line.day).$($line.month).$($line.year)"
             try
             {
                 $parsed = [datetime]::ParseExact($dateString, 'd.M.yyyy', $null)
                 $validDates += $parsed
             }
-            catch { }
+            catch
+            {
+
+            }
         }
     }
 }
@@ -44,4 +47,13 @@ else
 }
 
 $sortedDates = $validDates | Sort-Object
-$sortedDates | ForEach-Object { $_.ToString("dd-MM-yyyy") }
+$sortedDates | ForEach-Object { $_.ToString("dd.MM.yyyy") } | Out-File "sortedDates.csv"
+
+if (Test-Path "sortedDates.csv")
+{
+    Write-Host "'sortedDates.csv' file was created"
+} 
+else
+{
+    Write-Host "'sortedDates.csv' file could not be created"
+}
