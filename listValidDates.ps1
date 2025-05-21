@@ -49,6 +49,10 @@ else
 $sortedDates = $validDates | Sort-Object
 $sortedDates | ForEach-Object { $_.ToString("dd.MM.yyyy") } | Out-File "sortedDates.csv"
 
+$uniqueDates = $validDates | Select-Object -Unique
+$sortedDates = $uniqueDates | Sort-Object
+$sortedDates | ForEach-Object { $_.ToString("dd.MM.yyyy") } | Out-File "uniqueSortedDates.csv"
+
 if (Test-Path "sortedDates.csv")
 {
     Write-Host "'sortedDates.csv' file was created"
@@ -56,4 +60,13 @@ if (Test-Path "sortedDates.csv")
 else
 {
     Write-Host "'sortedDates.csv' file could not be created"
+}
+
+if (Test-Path "uniqueSortedDates.csv")
+{
+    Write-Host "'uniqueSortedDates.csv' file was created"
+} 
+else
+{
+    Write-Host "'uniqueSortedDates.csv' file could not be created"
 }
