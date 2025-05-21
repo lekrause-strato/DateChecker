@@ -1,8 +1,8 @@
 $validDates = @()
 
-if (Test-Path "*.txt")
+if (Test-Path ".\importedDates\*.txt")
 {
-    $datesInFileTxt = Get-Content "*.txt"
+    $datesInFileTxt = Get-Content ".\importedDates\*.txt"
     foreach ($line in $datesInFileTxt)
     {
         try
@@ -21,9 +21,9 @@ else
     Write-Host ".txt file not found, skipping..."
 }
 
-if (Test-Path ".*.csv")
+if (Test-Path ".\importedDates\*.csv")
 {
-    $datesInFileCsv = Import-Csv ".*.csv"
+    $datesInFileCsv = Import-Csv ".\importedDates\*.csv"
     foreach ($line in $datesInFileCsv)
     {
         if ($line.day -and $line.month -and $line.year)
@@ -47,13 +47,13 @@ else
 }
 
 $sortedDates = $validDates | Sort-Object
-$sortedDates | ForEach-Object { $_.ToString("dd.MM.yyyy") } | Out-File "sortedDates.csv"
+$sortedDates | ForEach-Object { $_.ToString("dd.MM.yyyy") } | Out-File ".\sortedDates\sortedDates.csv"
 
 $uniqueDates = $validDates | Select-Object -Unique
 $sortedDates = $uniqueDates | Sort-Object
-$sortedDates | ForEach-Object { $_.ToString("dd.MM.yyyy") } | Out-File "uniqueSortedDates.csv"
+$sortedDates | ForEach-Object { $_.ToString("dd.MM.yyyy") } | Out-File ".\sortedDates\uniqueSortedDates.csv"
 
-if (Test-Path "sortedDates.csv")
+if (Test-Path ".\sortedDates\sortedDates.csv")
 {
     Write-Host "'sortedDates.csv' was created"
 } 
@@ -62,7 +62,7 @@ else
     Write-Host "'sortedDates.csv' could not be created"
 }
 
-if (Test-Path "uniqueSortedDates.csv")
+if (Test-Path ".\sortedDates\uniqueSortedDates.csv")
 {
     Write-Host "'uniqueSortedDates.csv' was created"
 } 
