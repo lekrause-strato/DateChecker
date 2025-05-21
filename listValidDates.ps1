@@ -21,9 +21,9 @@ else
     Write-Host ".txt file not found, skipping..."
 }
 
-if (Test-Path "*.csv")
+if (Test-Path ".*.csv")
 {
-    $datesInFileCsv = Import-Csv "*.csv"
+    $datesInFileCsv = Import-Csv ".*.csv"
     foreach ($line in $datesInFileCsv)
     {
         if ($line.day -and $line.month -and $line.year)
@@ -55,18 +55,18 @@ $sortedDates | ForEach-Object { $_.ToString("dd.MM.yyyy") } | Out-File "uniqueSo
 
 if (Test-Path "sortedDates.csv")
 {
-    Write-Host "'sortedDates.csv' file was created"
+    Write-Host "'sortedDates.csv' was created"
 } 
 else
 {
-    Write-Host "'sortedDates.csv' file could not be created"
+    Write-Host "'sortedDates.csv' could not be created"
 }
 
 if (Test-Path "uniqueSortedDates.csv")
 {
-    Write-Host "'uniqueSortedDates.csv' file was created"
+    Write-Host "'uniqueSortedDates.csv' was created"
 } 
 else
 {
-    Write-Host "'uniqueSortedDates.csv' file could not be created"
+    Write-Host "'uniqueSortedDates.csv' could not be created"
 }
