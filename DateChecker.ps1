@@ -1,3 +1,5 @@
+#Import-Module ActiveDirectory
+ 
 $todaysdate = Read-Host "use todays date? [y] = yes , [n] = no"
 $retryDateInput = $true
 
@@ -31,4 +33,29 @@ while($true)
     }
 }
 
-Write-Host "Your date is $($date.ToString('dd.MM.yyyy'))."
+$dateType = Read-Host "What do you want to see? [day] = 1 , [month] = 2, [year] = 3"
+
+while ($true)
+{
+    if($dateType -eq "1") 
+    {
+        Write-Host "your day is: $($date.Day) and it's $($date.DayOfWeek)"
+        break
+    }
+    elseif($dateType -eq "2") 
+    {
+        Write-Host "your month is: $($date.Month)"
+        break 
+    }
+    elseif($dateType -eq "3") 
+    {
+        Write-Host "your year is: $($date.Year)"
+        break
+    }
+    else
+    {
+        $dateType = Read-Host "wrong input, please [day] = 1 , [month] = 2 , [year] = 3"
+    }
+}
+
+# Write-Host "Your date is $($date.ToString('dd.MM.yyyy'))."
