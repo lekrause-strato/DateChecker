@@ -33,28 +33,28 @@ while($true)
     }
 }
 
-$dateType = Read-Host "What do you want to see? [day] = 1 , [month] = 2, [year] = 3"
+$dateType = Read-Host "What do you want to see? [day] = d , [month] = m, [year] = y"
 
 while ($true)
 {
-    if($dateType -eq "1") 
+    if($dateType -eq "d") 
     {
         Write-Host "your day is: $($date.Day) and it's $($date.DayOfWeek)"
         break
     }
-    elseif($dateType -eq "2") 
+    elseif($dateType -eq "m") 
     {
         Write-Host "your month is: $($date.Month)"
         break 
     }
-    elseif($dateType -eq "3") 
+    elseif($dateType -eq "y") 
     {
         Write-Host "your year is: $($date.Year)"
         break
     }
     else
     {
-        $dateType = Read-Host "wrong input, please [day] = 1 , [month] = 2 , [year] = 3"
+        $dateType = Read-Host "wrong input, please [day] = d , [month] = m , [year] = y"
     }
 }
 
