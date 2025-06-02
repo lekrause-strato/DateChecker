@@ -1,3 +1,58 @@
+$userInput = Read-Host "do you want to manually enter dates? please [y] = yes , [n] = no"
+
+if ($userInput -eq "y")
+{
+    $manualDates = @()
+
+    while ($true)
+    {
+        $dateInput = Read-Host "enter a date 'dd.MM.yyyy', if done please [done]"
+        
+        if ($dateInput -eq "done")
+        {
+            break
+        }
+
+        try
+        {
+            [datetime]::Parse($dateInput) | Out-Null
+            $manualDates += $dateInput
+        }
+        
+        catch
+        {
+            Write-Host "'$dateInput' is not a valid input, pls dd.MM.yyyy or [skip]"
+        }
+    }
+
+    if ($manualDates.Count -gt 0)
+    {
+        $manualDates | Out-File ".\importedDates\manualInput.txt"
+        Write-Host "`n'manualInput.txt' was created at '.\importedDates'"
+    }
+    
+    else
+    {
+        Write-Host "no valid dates entered. no file created."
+    }
+}
+
+elseif($userInput -eq "n")
+{  
+    Write-Host "manual input skipped"
+}
+
+else
+{
+    Write-Host "wrong input, manual input skipped"
+}
+
+Start-Sleep -Seconds 2
+
+Write-Host "`nsorting avaliable dates...`n"
+
+Start-Sleep -Seconds 2.5
+
 $validDates = @()
 
 if (Test-Path ".\importedDates\*.txt")
@@ -16,6 +71,7 @@ if (Test-Path ".\importedDates\*.txt")
         }
     }
 }
+
 else
 {
     Write-Host ".txt file not found, skipping..."
@@ -41,6 +97,7 @@ if (Test-Path ".\importedDates\*.csv")
         }
     }
 }
+
 else 
 {
     Write-Host ".csv file not found, skipping..."
@@ -55,18 +112,10 @@ $sortedDates | ForEach-Object { $_.ToString("dd.MM.yyyy") } | Out-File ".\sorted
 
 if (Test-Path ".\sortedDates\sortedDates.csv")
 {
-    Write-Host "'sortedDates.csv' was created"
-} 
-else
-{
-    Write-Host "'sortedDates.csv' could not be created"
+    Write-Host "'sortedDates.csv' was created at '.\sortedDates'"
 }
 
 if (Test-Path ".\sortedDates\uniqueSortedDates.csv")
 {
-    Write-Host "'uniqueSortedDates.csv' was created"
-} 
-else
-{
-    Write-Host "'uniqueSortedDates.csv' could not be created"
+    Write-Host "'uniqueSortedDates.csv' was created at '.\sortedDates'"
 }
