@@ -1,21 +1,32 @@
 . ".\listValidDates\funcions.ps1"
 
-$userInput = Read-Host "do you want to manually enter dates? please [y] = yes , [n] = no"
+while ($true)
+{
+    $userInput = Read-Host "`nselect any action: add manual input = [1] , sort dates = [2] , delete dates = [3] , exit = [4]"
 
-if ($userInput -eq "y") {
-    Get-ManualDates
-} elseif ($userInput -eq "n") {
-    Write-Host "Manual input skipped."
-} else {
-    Write-Host "invalid input, Manual input skipped."
+    if ($userInput -eq "1") {
+        Get-ManualDates
+    }
+    elseif ($userInput -eq "2")
+    {
+        Write-Host "`nsorting available dates...`n" -ForegroundColor DarkMagenta
+        $allDates = @()
+        $allDates += Get-TxtDates
+        $allDates += Get-CsvDates
+        Save-SortedDates -dates $allDates
+    }
+    elseif ($userInput -eq "3")
+    {
+        Remove-Dates
+    }
+
+    elseif ($userInput -eq "4")
+    {
+        Write-Host "exiting script..." -ForegroundColor Blue
+        break
+    }
+    else
+    {
+        Write-Host "invalid entry, please [1-4]`n" -ForegroundColor Blue
+    }
 }
-
-Start-Sleep -Seconds 1.5
-Write-Host "`nSorting available dates...`n"
-Start-Sleep -Seconds 1
-
-$allDates = @()
-$allDates += Get-TxtDates
-$allDates += Get-CsvDates
-
-Save-SortedDates -dates $allDates

@@ -15,24 +15,31 @@ function Get-ManualDates
         {
             [datetime]::Parse($dateInput) | Out-Null
             $manualDates += $dateInput
-            Write-Host "-> '$dateInput' was added"
+            Write-Host "-> '$dateInput' was added" -ForegroundColor Green
         }
         
         catch
         {
-            Write-Host "'$dateInput' is not a valid input, pls dd.MM.yyyy or [skip]"
+            if ($dateInput -ne "")
+            {
+                Write-Host "'$dateInput' is not a valid input" -ForegroundColor Red
+            }
+            elseif ($dateInput -eq "")
+            {
+                Write-Host "'NULL' is not a valid input" -ForegroundColor Red
+            } 
         }
     }
 
     if ($manualDates.Count -gt 0)
     {
         $manualDates | Out-File ".\importedDates\manualInput.txt"
-        Write-Host "`n'manualInput.txt' was created at '.\importedDates'"
+        Write-Host "`n'manualInput.txt' was created at '.\importedDates'" -ForegroundColor Cyan
     }
     
     else
     {
-        Write-Host "no valid dates entered. no file created."
+        Write-Host "no valid dates entered. no file created." -ForegroundColor Blue
     }
 }
 
@@ -53,14 +60,14 @@ function Get-TxtDates
             
             catch
             {
-                
+
             }
         }
     }
     
     else
     {
-        Write-Host ".txt files not found. Skipping..."
+        Write-Host ".txt files not found. Skipping..." -ForegroundColor Blue
     }
 
     return $validDates
@@ -87,7 +94,7 @@ function Get-CsvDates
         }
     } else
     {
-        Write-Host ".csv files not found. Skipping..."
+        Write-Host ".csv files not found. Skipping..." -ForegroundColor Blue
     }
 
     return $validDates
@@ -113,11 +120,15 @@ function Save-SortedDates
 
     if (Test-Path ".\sortedDates\sortedDates.csv")
     {
-        Write-Host "'sortedDates.csv' was created at '.\sortedDates'"
+        Write-Host "'sortedDates.csv' was created at '.\sortedDates'" -ForegroundColor Cyan
     }
 
     if (Test-Path ".\sortedDates\uniqueSortedDates.csv")
     {
-        Write-Host "'uniqueSortedDates.csv' was created at '.\sortedDates'"
+        Write-Host "'uniqueSortedDates.csv' was created at '.\sortedDates'" -ForegroundColor Cyan
     }
+}
+function Remove-Dates
+{
+    Write-host "feature will be added soon..." -ForegroundColor White
 }
