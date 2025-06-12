@@ -128,7 +128,28 @@ function Save-SortedDates
         Write-Host "'uniqueSortedDates.csv' was created at '.\sortedDates'" -ForegroundColor Cyan
     }
 }
-function Remove-Dates
+function Move-DateToDeleted
 {
-    Write-host "feature will be added soon..." -ForegroundColor White
+    param
+    (
+        [string]$datesFile = ".\sortedDates\sortedDates.csv",
+        [string]$deletedFile = ".\deletedDates\deletedDates.csv"
+    )
+
+    $dates = Get-Content $datesFile
+
+    $dateToDelete = Read-Host "enter a date to move 'dd.MM.yyyy'"
+
+    if ($dates -contains $dateToDelete)
+    {
+        $dates | Where-Object { $_ -ne $dateToDelete } | Set-Content $datesFile
+        Add-Content $deletedFile $dateToDelete
+
+        Write-Host "Date $dateToDelete has been moved."
+    }
+    
+    else
+    {
+        Write-Host "Date $dateToDelete was not found."
+    }
 }

@@ -17,7 +17,7 @@ while ($true)
     }
     elseif ($userInput -eq "3")
     {
-        Remove-Dates
+        Move-DateToDeleted
     }
 
     elseif ($userInput -eq "4")
