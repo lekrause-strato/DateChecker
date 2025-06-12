@@ -39,7 +39,7 @@ function Get-ManualDates
     
     else
     {
-        Write-Host "no valid dates entered. no file created." -ForegroundColor Blue
+        Write-Host "no valid dates entered. no file created" -ForegroundColor Blue
     }
 }
 
@@ -138,18 +138,21 @@ function Move-DateToDeleted
 
     $dates = Get-Content $datesFile
 
-    $dateToDelete = Read-Host "enter a date to move 'dd.MM.yyyy'"
+    $dateToDelete = Read-Host "enter a date to move, please 'dd.MM.yyyy'"
 
     if ($dates -contains $dateToDelete)
     {
         $dates | Where-Object { $_ -ne $dateToDelete } | Set-Content $datesFile
         Add-Content $deletedFile $dateToDelete
 
-        Write-Host "Date $dateToDelete has been moved."
+        Write-Host "Date $dateToDelete has been moved to .\deletedDates.csv" -ForegroundColor Cyan
     }
-    
+    elseif ($dateToDelete)
+    {
+        Write-Host "'$dateToDelete' is not a valid input, please 'dd.MM.yyyy'" -ForegroundColor Red
+    }
     else
     {
-        Write-Host "Date $dateToDelete was not found."
+        Write-Host "no valid date entered. no file created" -ForegroundColor Blue
     }
 }
