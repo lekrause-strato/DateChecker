@@ -138,18 +138,25 @@ function Move-DateToDeleted
 
     $dates = Get-Content $datesFile
 
-    $dateToDelete = Read-Host "enter a date to move 'dd.MM.yyyy'"
-
-    if ($dates -contains $dateToDelete)
+    while ($true)
     {
-        $dates | Where-Object { $_ -ne $dateToDelete } | Set-Content $datesFile
-        Add-Content $deletedFile $dateToDelete
+        $dateToDelete = Read-Host "enter a date to move 'dd.MM.yyyy', if done please [done]"
 
-        Write-Host "Date $dateToDelete has been moved."
-    }
-    
-    else
-    {
-        Write-Host "Date $dateToDelete was not found."
+        if ($dateToDelete -eq "done")
+        {
+            break
+        }
+
+        if ($dates -contains $dateToDelete)
+        {
+            $dates = $dates | Where-Object { $_ -ne $dateToDelete }
+            Set-Content $datesFile $dates
+            Add-Content $deletedFile $dateToDelete
+            Write-Host "-> '$dateToDelete' has been moved." -ForegroundColor Green
+        }
+        else
+        {
+            Write-Host "'$dateToDelete' not found. No date moved." -ForegroundColor Red
+        }
     }
 }
